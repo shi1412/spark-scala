@@ -1,6 +1,7 @@
 # Table of Contents
 *  ### [Introduction](#introduction)
-*  ### [Parallel Processing](#parallel-processing)
+*  ### [Parallel Processing](#scala-parallel-processing)
+*  ### [Scala and SQL](#using-scala-in-sql)
 
 
 
@@ -118,4 +119,46 @@ class Point2D(coord1:Int, coord2: Int) {
 val point1 = new Point2D(10, 20)
 point1.move(5, 15)
 ```
-# Parallel Processing
+# Scala Parallel Processing
+| Sequential Collections | Parallel Collections|
+| -----------------------| -------------------:|
+| Arrays, Vectors,Hashmap, HashSet| ParArrays, ParVector, ParHashMap|
+1. Parallel collections should be considered only when you have at least thousands 
+2. For some types of collections, converting between sequential and parallel collections requires copying the content of a collection
+3. Best to avoid applying procedures with the side effects
+4. avoid nonassociative operations
+
+```
+# convert a sequential collection into a parallel collections
+val rng = 1 to 100
+val prang = rng.par
+# define a parallel collections
+import scala.collection.parallel.immutable.ParVector
+val pevac = ParVector.range(0, 200)
+val v = (1 to 100).toArray
+val pv = v.par
+v.map(_ * 2)
+pv.map(_ * 2)
+
+def square (x: Int): Int = {
+  return x*x
+}
+v.map(square(_))
+pv.map(square(_))
+# filtering
+val v = (1 to 10000).toArray
+val pv = v.par
+v.length
+pv.length
+val pvf =pv.filter(_ > 5000)
+pvf.length
+val pvf2 = pv.filterNot(_ > 5000)
+pvf2.length
+# filter can work on customized function that return boolean value
+def div3 (x: Int): Boolean = {
+  val y: Int = (x%3); return (y == 0)
+}
+pv.filter(div3(_))
+```
+
+# Using Scala in SQL
