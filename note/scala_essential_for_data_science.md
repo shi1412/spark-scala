@@ -108,7 +108,7 @@ loc1. //tab
 // define a private member
 class myPubliPrivate(val x:Int=0, val y:Int=0, private val z: Int=0)
 val myPP = new myPublicPrivate
-myPP. #tab
+myPP. //tab
 // private member can only be referenced inside the class 
 class Point2D(coord1:Int, coord2: Int) {
   var a: Int = coord1
@@ -196,7 +196,7 @@ while (resultSet.next()) {
 // work with prepared statements
 val query_str =  "select * from company_regions where region_id > ?"
 val ps = connection.prepareStatement(query_str)
-ps.setInt(1, 5) # set the first question mark as 5
+ps.setInt(1, 5) //set the first question mark as 5
 val rs = ps.executeQuery() 
 rs.getString("company_regions")
 rs.getInt("region_id")
@@ -268,6 +268,19 @@ df_emps.show() // table like
 val df_cr = spark.read.option("header", "true").csv("PATH_OF_THE_FILE")
 df_cr.columns // List the columns
 val df_dd = spark.read.option("header", "true").csv("PATH_OF_THE_FILE")
+
+// Grouping and Filtering
+df_emps.createOrReplaceTempView("employees")
+val sqldf_emps = spark.sql("SELETC * FROM employees")
+val sqldf_emps_by_dept = spark.sql("SELECT department, count(*) FROM employees GROUP BY department")
+val sqldf_depts = spark.sql("SELECT DISTINCT department FROM employees")
+val sqldf_emps_100 = spark.sql("SELECT * FROM employees WHERE id < 100")
+
+// Joining
+val df_joined = df_emps.join(df_cr, "region_id")
+
+// Working with JSON file
+vla df_json_dd = spark.read.json("PATH_OF_THE_FTILE")
 ```
 
 
