@@ -175,7 +175,7 @@ pv.filter(div3(_))
 * Import the plugin: `scala -classpath /usr/local/lib/psql/share/java/postgresql-42.1.1.jre6.jar`
 * Command samples:
 ```scala
-import java.sql.D #\t
+import java.sql.D //tab
 import java.sql.DriverManager
 import java.sql.Connection
 val driver = "org.postgresql.Driver"
@@ -280,8 +280,14 @@ val sqldf_emps_100 = spark.sql("SELECT * FROM employees WHERE id < 100")
 val df_joined = df_emps.join(df_cr, "region_id")
 
 // Working with JSON file
-vla df_json_dd = spark.read.json("PATH_OF_THE_FTILE")
+val df_json_dd = spark.read.json("PATH_OF_THE_FTILE")
 ```
+
+Additional packages
+1. Saddle for data manipulation
+2. Breeze for numeric and scientific processing
+3. Scala-like JDBC for additional support for SQL
+
 
 
 
